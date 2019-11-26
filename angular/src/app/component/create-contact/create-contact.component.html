@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-body">
+      <div class="menu row justify-content-center align-items-center">
+        <div class="menu-title col-md-4">
+          <div class="card card-title text-danger">Create Contact</div>
+        </div>
+        <div class="menu-description col-md-5">
+          <div class="card card-body text-muted text-dark">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s.
+          </div>
+        </div>
+        <div class="menu-button col-md-3">
+          <div class="card card-title">
+            <button (click)="gotoList()" class="btn btn-secondary pull-right">CONTACT LIST</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid bg-grey">
+  <br>
+  <div class="container">
+
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        <div ng-if="serverErrors.length > 0">
+          <div *ngFor="let error of serverErrors" class="alert alert-danger">
+            {{error}}
+          </div>
+        </div>
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+
+          <div class="row">
+            <div class="form-group col-md-6">
+              <input placeholder="Contact" formControlName="name" name="name" type="text" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Name is required</div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <select formControlName="contactType" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.contactType.errors }">
+                <option value="">Contact Type</option>
+                <option value="INDIVIDUAL">Individual</option>
+                <option value="COMPANY">Company</option>
+              </select>
+              <div *ngIf="submitted && f.contactType.errors" class="invalid-feedback">
+                <div *ngIf="f.contactType.errors.required">Contact Type is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-6">
+              <input placeholder="Phone" formControlName="phone" name="phone" type="text" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
+              <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                <div *ngIf="f.phone.errors.required">Phone is required</div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <div class="input-group">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+                <input placeholder="Birthday" formControlName="birthday" name="birthday" type="text"
+                       class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && f.birthday.errors }" placeholder="yyyy-mm-dd"
+                       ngbDatepicker
+                       #d="ngbDatepicker">
+                <div *ngIf="submitted && f.birthday.errors" class="invalid-feedback">
+                  <div *ngIf="f.birthday.errors.required">Birthday is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <br>
+              <button type="submit" class="col-md-2 btn-sm btn btn-danger pull-right">Submit</button>
+            </div>
+          </div>
+          <br>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

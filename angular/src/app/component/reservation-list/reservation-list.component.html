@@ -1,0 +1,94 @@
+<div class="container-fluid no-padding">
+  <div class="row">
+    <div class="col-md-12">
+      <img class="img-responsive" src="https://via.placeholder.com/1200x50.png?text=Demo for ISU Corp" width="100%">
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-body">
+      <div class="menu row justify-content-center align-items-center">
+        <div class="menu-title col-md-4">
+          <div class="card card-title text-danger">Reservation List</div>
+        </div>
+        <div class="menu-description col-md-5">
+          <div class="card card-body text-muted text-dark">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s.
+          </div>
+        </div>
+        <div class="menu-button col-md-3">
+          <div class="card card-title">
+            <button (click)="createReservation()" class="btn btn-secondary pull-right">CREATE RESERVATION</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid bg-grey">
+  <br>
+  <div class="container">
+    <div class="panel">
+      <div class="panel-body">
+        <table class="table table-striped table-borderless">
+          <tbody>
+          <tr class="row bg-light">
+            <td colspan="4" class="col-md-4 text-left">
+              <select #t  (change)="orderTable($event.target.value)" class="form-control">
+                <option>Sort by</option>
+                <option value="visitDateTime-ASC">By Date Ascending</option>
+                <option value="visitDateTime-DESC">By Date Descending</option>
+                <option value="place.name-ASC">By Alphabetical Descending</option>
+                <option value="place.name-DESC">By Alphabetical Ascending</option>
+                <option value="place.ranking-ASC">By Ranking Ascending</option>
+                <option value="place.ranking-DESC">By Ranking Descending</option>
+              </select>
+            </td>
+          </tr>
+          <tr class="row bg-light" *ngFor="let reservation of reservations">
+            <td class="col-sm-12 col-md-1">
+              <img style="display:block;" width="100%" height="100%"
+                   src="https://via.placeholder.com/50x50.png?text=DummyPlace_2">
+            </td>
+            <td class="col-sm-12 col-md-3">
+              <div>
+                {{reservation.place.name}}
+              </div>
+              <div class="text-muted">
+                {{reservation.visitDateTime}}
+              </div>
+            </td>
+            <td class="col-sm-12 col-md-3">
+              <div>Ranking</div>
+              <span *ngFor="let item of [].constructor(5); let i = index">
+                <span *ngIf="i < reservation.place.ranking" class="fa fa-star checked"></span>
+                <span *ngIf="i >= reservation.place.ranking" class="fa fa-star text-muted"></span>
+              </span>
+            </td>
+            <td class="col-sm-12 col-md-3">
+                  <span *ngIf="reservation.favorite === false" class="text-muted">Add Favorites<span class="fa fa-heart text-muted"></span></span>
+                  <span *ngIf="reservation.favorite === true">Add Favorites<span class="fa fa-heart text-danger"></span></span>
+            </td>
+            <td class="col-sm-12 col-md-2">
+              <button (click)="updateReservation(reservation.id)" class="btn btn-secondary btn-sm">EDIT
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <ul class="pagination">
+          <li class="page-item" *ngFor="let item of [].constructor(totalPages); let i = index">
+            <a class="page-link" href="javascript:void(0)" (click)="gotoPage(i)" >{{i+1}}</a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+  <br>
+</div>

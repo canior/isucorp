@@ -1,0 +1,143 @@
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-body">
+      <div class="menu row justify-content-center align-items-center">
+        <div class="menu-title col-md-4">
+          <div class="card card-title text-danger">Create Reservation</div>
+        </div>
+        <div class="menu-description col-md-5">
+          <div class="card card-body text-muted text-dark">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s.
+          </div>
+        </div>
+        <div class="menu-button col-md-3">
+          <div class="card card-title">
+            <button (click)="gotoList()" class="btn btn-secondary pull-right">RESERVATION LIST</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid bg-grey">
+  <br>
+  <div class="container">
+    <div class="panel panel-primary">
+      <div class="panel-body">
+
+        <div ng-if="serverErrors.length > 0">
+          <div *ngFor="let error of serverErrors" class="alert alert-danger">
+            {{error}}
+          </div>
+        </div>
+
+        <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+
+          <div formGroupName="contact" class="row">
+            <div class="form-group col-md-3">
+              <input (blur)="searchOneContact()" formControlName="name" name="name" type="text" class="form-control"
+                     placeholder="Contact Name" [ngClass]="{ 'is-invalid': submitted && c.name.errors }">
+              <div *ngIf="submitted && c.name.errors" class="invalid-feedback">
+                <div *ngIf="c.name.errors.required">Name is required</div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <select formControlName="contactType" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && c.contactType.errors }">
+                <option value="">Contact Type</option>
+                <option value="INDIVIDUAL">Individual</option>
+                <option value="COMPANY">Company</option>
+              </select>
+              <div *ngIf="submitted && c.contactType.errors" class="invalid-feedback">
+                <div *ngIf="c.contactType.errors.required">Contact Type is required</div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <input formControlName="phone" name="phone" type="text" class="form-control"
+                     placeholder="Phone" [ngClass]="{ 'is-invalid': submitted && c.phone.errors }">
+              <div *ngIf="submitted && c.phone.errors" class="invalid-feedback">
+                <div *ngIf="c.phone.errors.required">Phone is required</div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <div class="input-group">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+                <input formControlName="birthday" name="birthday" type="text" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && c.birthday.errors }" placeholder="Birthdate (yyyy-mm-dd)"
+                       ngbDatepicker #d="ngbDatepicker">
+                <div *ngIf="submitted && c.birthday.errors" class="invalid-feedback">
+                  <div *ngIf="c.birthday.errors.required">Birthday is required</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div formGroupName="place" class="col-md-6">
+              <div class="form-group">
+                <select formControlName="id" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && c.contactType.errors }">
+                  <option *ngFor="let place of places; let i = index" [value]="places[i].id">
+                    {{places[i].name}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && p.id.errors" class="invalid-feedback">
+                  <div *ngIf="p.id.errors.required">Place is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <div class="input-group">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="v.toggle()" type="button"></button>
+                </div>
+                <input formControlName="visitDateTime" name="visitDateTime" type="text" class="form-control"
+                       [ngClass]="{'is-invalid': submitted && f.visitDateTime.errors}"
+                       placeholder="Visit Date (yyyy-mm-dd)"
+                       ngbDatepicker #v="ngbDatepicker">
+                <div *ngIf="submitted && f.visitDateTime.errors" class="invalid-feedback">
+                  <div *ngIf="f.visitDateTime.errors.required">Visit Date is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <select formControlName="favorite" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.favorite.errors }">
+                <option value="">Choose Favorite</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+              <div *ngIf="submitted && f.favorite.errors" class="invalid-feedback">
+                <div *ngIf="f.favorite.errors.required">Favorite is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <ckeditor class="col-md-12" formControlName="description" [editor]="Editor"></ckeditor>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <br>
+              <button type="submit" class="col-md-2 pull-right btn-sm btn btn-danger">Send</button>
+            </div>
+          </div>
+
+          <br>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+.no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+.checked {
+  color: #FFE000;
+}
+.menu-title {
+  font-size: 2em;
+}
+
+.menu-description {
+  font-size: 0.8em;
+}
+
+.card {
+  border: none;
+}
+
+.bg-grey {
+  background-color: #ccc;
+}
+
