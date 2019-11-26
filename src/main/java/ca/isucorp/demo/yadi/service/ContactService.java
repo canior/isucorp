@@ -52,7 +52,7 @@ public class ContactService {
 	 */
 	public void deleteContact(Long id) {
 		Contact contact = this.contactRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
-		if (this.reservationService.getReservationByContact(contact) != null) {
+		if (!this.reservationService.getReservationsByContact(contact).isEmpty()) {
 			this.reservationService.removeReservationsByContact(contact);
 		}
 		this.contactRepository.deleteById(id);

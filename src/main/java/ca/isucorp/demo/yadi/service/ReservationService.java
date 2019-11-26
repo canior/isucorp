@@ -38,12 +38,12 @@ public class ReservationService {
 		return this.reservationRepository.findById(id).orElse(null);
 	}
 
-	public List<Reservation> getReservationByContact(Contact contact) {
+	public List<Reservation> getReservationsByContact(Contact contact) {
 		return this.reservationRepository.getReservationsByContact(contact);
 	}
 
 	public void removeReservationsByContact(Contact contact) {
-		List<Reservation> reservations = this.getReservationByContact(contact);
+		List<Reservation> reservations = this.getReservationsByContact(contact);
 		if (!reservations.isEmpty()) {
 			this.reservationRepository.deleteInBatch(reservations);
 		}
