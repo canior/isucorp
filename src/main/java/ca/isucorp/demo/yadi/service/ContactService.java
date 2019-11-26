@@ -15,6 +15,9 @@ public class ContactService {
 	
 	@Autowired
 	ContactRepository contactRepository;
+
+	@Autowired
+	ReservationService reservationService;
 	
 	public Page<Contact> getContactList(Pageable pageable) {
 		return this.contactRepository.findAll(pageable);
@@ -42,8 +45,16 @@ public class ContactService {
 		this.contactRepository.save(contact);
 		return contact;
 	}
-	
+
+	/**
+	 * Delete contact deletes all related reservations
+	 * @param id
+	 */
 	public void deleteContact(Long id) {
+		Contact contact = this.contactRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
+		if (this.reservationService.getReservationByContact(contact) != null) {
+			this.reservationService.removeReservationsByContact(contact);
+		}
 		this.contactRepository.deleteById(id);
 	}
 	

@@ -2,6 +2,7 @@ package ca.isucorp.demo.yadi.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,7 +37,18 @@ public class ReservationService {
 	public Reservation getReservation(Long id) {
 		return this.reservationRepository.findById(id).orElse(null);
 	}
-	
+
+	public List<Reservation> getReservationByContact(Contact contact) {
+		return this.reservationRepository.getReservationsByContact(contact);
+	}
+
+	public void removeReservationsByContact(Contact contact) {
+		List<Reservation> reservations = this.getReservationByContact(contact);
+		if (!reservations.isEmpty()) {
+			this.reservationRepository.deleteInBatch(reservations);
+		}
+	}
+
 	/**
 	 * Create reservation for existing contact, if the contact doesn't exist, create one first
 	 * @param reservationDto
